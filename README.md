@@ -1,7 +1,7 @@
 
 Artigo referente aos tipos de dados e modelagem SQL
 
-
+### Faculdade Senac - ADS
 
 
 # Tipos de Dados e Regras na Modelagem SQL
