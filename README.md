@@ -84,3 +84,75 @@ Os 3 tipos principais são:
 | **xml** | Dados XML (até 2 GB). |
 | **cursor** | Referência a cursor de banco de dados. |
 | **table** | Conjunto de resultados para processamento posterior. |
+
+
+
+# Regras na Modelagem SQL
+
+Este artigo tem como objetivo trazer boas práticas no processo de modelagem de dados. 
+Construir bancos de dados eficientes e que apresentem uma excelente consistência 
+dos dados é fundamental para garantir o bom funcionamento das aplicações que 
+utilizam bancos de dados.
+
+O processo de modelagem de dados realizado de forma adequada e normalizada 
+proporciona que a criação do banco de dados já comece bem e diminui o risco de 
+problemas de inconsistências.
+
+## Nome da Entidade
+- Deve ser escrito no singular e em maiúsculo;  
+- O nome deve ser o mais descritível possível e deve identificar a utilidade e aplicação da entidade;  
+- Não se deve utilizar acentos e nem o cedilha;  
+- Deve ter no máximo 30 caracteres por conta de limitações de alguns bancos de dados (Oracle e Firebird).  
+
+## PK — Chave Primária
+- Usar chave primária sempre com um campo;  
+- Não utilizar chaves compostas;  
+- A chave primária deve sempre ser o primeiro campo da tabela;  
+- A chave deve sempre ser referenciada como “ID”;  
+- Deve ser autoincremento.  
+
+## Índices
+- O índice da chave primária deve ser nomeado apenas como PRIMARY;  
+- Os índices que serão criados na própria tabela para otimização de consultas devem seguir o padrão `IX_NOME_TABELAn`, onde o “n” é um número que vai sendo incrementado de acordo com a quantidade de índices.  
+
+## Chaves Estrangeiras
+- O nome do campo deve ser igual à chave primária da tabela de origem concatenado com o nome da tabela.  
+- Exemplo: a tabela `PAGAMENTO` deverá ter um relacionamento com a tabela `AUTOR`. O campo que será utilizado na tabela `LIVRO` será `ID_AUTOR`.  
+- O nome do índice será `FK_LIVRO_AUTOR`.  
+- Caso o nome fique muito grande e não seja possível a criação por parte do banco de dados, é permitido fazer a abreviação.  
+
+## Tipos de Dados
+- Deve-se respeitar o tipo de dado para o campo definido.  
+- Serão escolhidos os tipos que sejam comuns a todos os bancos de dados.  
+
+## Sequence e Generator
+- Para os bancos que necessitam da criação de uma Sequence ou Generator a parte da tabela, deve-se seguir o seguinte padrão: `SEQ_NOME_TABELA`.  
+
+## Views
+- Deve-se criar a view com um prefixo para que ela seja identificada como tal.  
+- Exemplo: `VIEW_CONTROLE_ACESSO`.  
+
+## Procedures, Functions, Triggers
+- Não serão utilizados, a princípio.  
+- Caso haja a necessidade de criação, deve-se utilizar um prefixo para identificação:  
+  - Procedure — `SP_`  
+  - Function — `FUNCTION_`  
+  - Trigger — `TRIGGER_`  
+
+## Comentários
+- Deve-se ter como hábito fazer os devidos comentários para as tabelas e os campos na ferramenta utilizada para a modelagem do DER.  
+- Dessa forma as tabelas e campos ficam bem documentados.  
+
+## Referências
+- [Medium - Modelagem de Bancos de Dados](https://medium.com/@alberteije/modelagem-de-bancos-de-dados-sem-segredos-parte-04-cbb40a1db4a7)  
+- [DevMedia - Modelagem de Dados](https://www.devmedia.com.br/modelagem-de-dados-tutorial/20398)  
+- [PM3 - Modelagem de Dados](https://pm3.com.br/blog/modelagem-de-dados/)  
+- [IBM - Data Modeling](https://www.ibm.com/br-pt/think/topics/data-modeling)  
+- [W3Schools - SQL Data Types](https://www.w3schools.com/sql/sql_datatypes.asp)  
+"""
+
+# Gerar arquivo markdown
+output_file = "/mnt/data/regras_modelagem_sql.md"
+pypandoc.convert_text(artigo_texto, 'md', format='md', outputfile=output_file, extra_args=['--standalone'])
+
+output_file
